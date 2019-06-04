@@ -1,11 +1,6 @@
 #!/usr/bin/python
 '''*****************************************************************************************************************
     Pi Temperature Station
-    By John M. Wargo
-    www.johnwargo.com
-
-    This is a Raspberry Pi project that measures weather values (temperature, humidity and pressure) using
-    the Astro Pi Sense HAT then uploads the data to a Weather Underground weather station.
 ********************************************************************************************************************'''
 
 from __future__ import print_function
