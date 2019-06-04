@@ -191,6 +191,41 @@ def main():
                     # set last_temp to the current temperature before we measure again
                     last_temp = temp_f
 
+# ========================================================
+# Code to connect a Ubidots
+# ========================================================
+try:
+   api = ApiClient("A1E-3a5b8883c342e7b0951814fb26df020c3fac") # Connect to Ubidots. Don't forget to put your own apikey
+   
+   for curDs in api.get_datasources():						# Check if there's any Data Source with the name AirPi
+	if curDs.name == "PiSenseHat":
+		dS = curDs
+		break
+   if dS is None:
+   	  dS = api.create_datasource({"name":"PiSenseHat"})			# If doesn't exist it'll create a Data Source with the name Airpi                    
+                    
+   temp = getVarbyNames("temp_f",dS)
+   if temp is None:
+	  temp = dS.create_variable({"name": "Temperature", "unit": "C"})	#Create a new Variable for temperature
+
+   humidity = getVarbyNames("humidity",dS)
+   if humidity is None:
+	  humidity = dS.create_variable({"name": "Humidity","unit": "%"}) # Create a new Variable for humidity
+                   
+   pressure = getVarbyNames("pressure",dS)
+   if pressure is None:
+	  pressure = dS.create_variable({"name": "Pressure","unit": "hPa"}) # Create a new Variable for temperature   
+   
+except:
+   print("Can't connect to Ubidots")
+
+while True:
+
+    # Post values to Ubidots
+    temp.save_value({'value':temp_f})
+    humidity.save_value({'value':humidity})
+    pressure.save_value({'value':pressure})
+    
                     # ========================================================
                     # Upload the weather data to Weather Underground
                     # ========================================================
@@ -225,7 +260,6 @@ def main():
         time.sleep(1)  # this should never happen since the above is an infinite loop
 
     print("Leaving main()")
-
 
 # ============================================================================
 # here's where we start doing stuff
