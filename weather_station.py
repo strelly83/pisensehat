@@ -15,6 +15,7 @@ import urllib2
 from sense_hat import SenseHat
 
 from config import Config
+from ubidots import ApiClient  		# Ubidots Library
 
 # ============================================================================
 # Constants
@@ -23,13 +24,16 @@ from config import Config
 MEASUREMENT_INTERVAL = 10  # minutes
 # Set to False when testing the code and/or hardware
 # Set to True to enable upload of weather data to Weather Underground
-WEATHER_UPLOAD = True
+# WEATHER_UPLOAD = True
 # the weather underground URL used to upload weather data
-WU_URL = "http://weatherstation.wunderground.com/weatherstation/updateweatherstation.php"
+# WU_URL = "http://weatherstation.wunderground.com/weatherstation/updateweatherstation.php"
 # some string constants
 SINGLE_HASH = "#"
 HASHES = "########################################"
 SLASH_N = "\n"
+
+# Setup Variables for Ubidots
+dS = None 
 
 # constants used to display an up and down arrows plus bars
 # modified from https://www.raspberrypi.org/learning/getting-started-with-the-sense-hat/worksheet/
@@ -191,6 +195,13 @@ def main():
                     # set last_temp to the current temperature before we measure again
                     last_temp = temp_f
 
+# Function to verify if the variable exists or not in your Ubidots account
+def getVarbyNames(varName,dS):
+	for var in dS.get_variables():
+		if var.name == varName:
+			return var
+	return None			
+
 # ========================================================
 # Code to connect a Ubidots
 # ========================================================
@@ -204,7 +215,7 @@ try:
    if dS is None:
    	  dS = api.create_datasource({"name":"PiSenseHat"})			# If doesn't exist it'll create a Data Source with the name Airpi                    
                     
-   temp = getVarbyNames("temp_f",dS)
+   temp = getVarbyNames("temp_c",dS)
    if temp is None:
 	  temp = dS.create_variable({"name": "Temperature", "unit": "C"})	#Create a new Variable for temperature
 
@@ -222,7 +233,7 @@ except:
 while True:
 
     # Post values to Ubidots
-    temp.save_value({'value':temp_f})
+    temp.save_value({'value':temp})
     humidity.save_value({'value':humidity})
     pressure.save_value({'value':pressure})
     
@@ -230,44 +241,44 @@ while True:
                     # Upload the weather data to Weather Underground
                     # ========================================================
                     # is weather upload enabled (True)?
-                    if WEATHER_UPLOAD:
+ #                   if WEATHER_UPLOAD:
                         # From http://wiki.wunderground.com/index.php/PWS_-_Upload_Protocol
-                        print("Uploading data to Weather Underground")
+ #                       print("Uploading data to Weather Underground")
                         # build a weather data object
-                        weather_data = {
-                            "action": "updateraw",
-                            "ID": wu_station_id,
-                            "PASSWORD": wu_station_key,
-                            "dateutc": "now",
-                            "tempf": str(temp_f),
-                            "humidity": str(humidity),
-                            "baromin": str(pressure),
-                        }
-                        try:
-                            upload_url = WU_URL + "?" + urlencode(weather_data)
-                            response = urllib2.urlopen(upload_url)
-                            html = response.read()
-                            print("Server response:", html)
+ #                       weather_data = {
+ #                           "action": "updateraw",
+ #                           "ID": wu_station_id,
+ #                           "PASSWORD": wu_station_key,
+ #                           "dateutc": "now",
+ #                           "tempf": str(temp_f),
+ #                           "humidity": str(humidity),
+ #                           "baromin": str(pressure),
+ #                       }
+ #                       try:
+ #                           upload_url = WU_URL + "?" + urlencode(weather_data)
+ #                           response = urllib2.urlopen(upload_url)
+ #                           html = response.read()
+ #                           print("Server response:", html)
                             # do something
-                            response.close()  # best practice to close the file
-                        except:
-                            print("Exception:", sys.exc_info()[0], SLASH_N)
-                    else:
-                        print("Skipping Weather Underground upload")
+ #                           response.close()  # best practice to close the file
+ #                       except:
+ #                           print("Exception:", sys.exc_info()[0], SLASH_N)
+ #                   else:
+ #                       print("Skipping Weather Underground upload")
 
         # wait a second then check again
         # You can always increase the sleep value below to check less often
-        time.sleep(1)  # this should never happen since the above is an infinite loop
+ #       time.sleep(1)  # this should never happen since the above is an infinite loop
 
-    print("Leaving main()")
+ #   print("Leaving main()")
 
 # ============================================================================
 # here's where we start doing stuff
 # ============================================================================
-print(SLASH_N + HASHES)
-print(SINGLE_HASH, "Pi Weather Station                  ", SINGLE_HASH)
-print(SINGLE_HASH, "By John M. Wargo (www.johnwargo.com)", SINGLE_HASH)
-print(HASHES)
+#print(SLASH_N + HASHES)
+#print(SINGLE_HASH, "Pi Weather Station                  ", SINGLE_HASH)
+#print(SINGLE_HASH, "By John M. Wargo (www.johnwargo.com)", SINGLE_HASH)
+#print(HASHES)
 
 # make sure we don't have a MEASUREMENT_INTERVAL > 60
 if (MEASUREMENT_INTERVAL is None) or (MEASUREMENT_INTERVAL > 60):
@@ -277,16 +288,16 @@ if (MEASUREMENT_INTERVAL is None) or (MEASUREMENT_INTERVAL > 60):
 # ============================================================================
 #  Read Weather Underground Configuration Parameters
 # ============================================================================
-print("\nInitializing Weather Underground configuration")
-wu_station_id = Config.STATION_ID
-wu_station_key = Config.STATION_KEY
-if (wu_station_id is None) or (wu_station_key is None):
-    print("Missing values from the Weather Underground configuration file\n")
-    sys.exit(1)
+#print("\nInitializing Weather Underground configuration")
+#wu_station_id = Config.STATION_ID
+#wu_station_key = Config.STATION_KEY
+#if (wu_station_id is None) or (wu_station_key is None):
+#    print("Missing values from the Weather Underground configuration file\n")
+#    sys.exit(1)
 
 # we made it this far, so it must have worked...
-print("Successfully read Weather Underground configuration values")
-print("Station ID:", wu_station_id)
+#print("Successfully read Weather Underground configuration values")
+#print("Station ID:", wu_station_id)
 # print("Station key:", wu_station_key)
 
 # ============================================================================
