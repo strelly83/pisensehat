@@ -50,8 +50,8 @@ Those 3 commands will update the Pi's software repository with the latest inform
 
 Next, you'll need to install support packages for the Sense HAT. In the same terminal window, execute the following command:
 
-    sudo apt-get install sense-hat
-	   
+    	sudo apt-get install sense-hat
+
 Installation
 ============
 
@@ -87,12 +87,21 @@ The terminal window should quickly sprout the following output:
 	Initializing the Sense HAT client	
 	Initialization complete!
 	ecc ecc
- 
-If you see something like that, you're golden. If not, figure out what any error messages mean, fix things, then try again. At this point, the application will start collecting data and uploading it to the Weather Underground every 10 minutes on the 10 minute mark (unless you changed the app's configuration to make the application work differently).
 
-Starting The Project's Application's Automatically
---------------------------------------------------
-sudo nano crontab -e
+NOTE: if the sense-hat is not initialize (OSerror sensehat)
+
+	sudo nano /boot/config.txt
 
 add this line:
-@reboot python /home/pi/pisensehat/weather_station_uby.py &
+
+	dtoverlay=rpi-sense
+
+If you see something like that, you're golden. If not, figure out what any error messages mean, fix things, then try again. At this point, the application will start collecting data and uploading it to the Weather Underground every 10 minutes on the 10 minute mark (unless you changed the app's configuration to make the application work differently).
+
+Starting The Project's Application's Automatically @ boot
+---------------------------------------------------------
+	sudo crontab -e
+
+add this line:
+	
+	@reboot sleep 60 && python /home/pi/pisensehat/weather_station_uby.py &
