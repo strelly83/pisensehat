@@ -24,7 +24,7 @@ The project folder contains several files and one folder:
 
 + `LICENSE` - The license file for this project
 + `readme.md` - This file. 
-+ `weather_station_ubi.py` - The main data collection application for this project. You'll run this application to read the Sense HAT board and post the collected data.   
++ `weather_station_ubi.py` - The main data collection application for this project. You'll run this application to read the Sense HAT board and post the collected data to Ubidots educational app  
 
 Hardware Assembly
 =================
@@ -74,6 +74,10 @@ The main application file, `weather_station_ubi.py` has two configuration settin
 	MEASUREMENT_INTERVAL = 10  # minutes
 
 The `MEASUREMENT_INTERVAL` variable controls how often the application reads temperature measurements from the Sense HAT. To change how often the application checks temperature values, change the value on the right of the equals sign on the second line.
+
+To connect to Ubidots, please don't forget to put your own apikey!
+
+	api = ApiClient("A1E-baee7da49300eee20eb148229cf1ead45d71") 
 
 Testing the Application
 =======================
