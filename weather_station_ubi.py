@@ -14,7 +14,7 @@ from urllib import urlencode
 import urllib2
 from sense_hat import SenseHat
 
-from config import Config
+#from config import Config
 from ubidots import ApiClient          # Ubidots Library
 
 # ============================================================================
