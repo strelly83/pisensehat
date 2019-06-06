@@ -50,7 +50,7 @@ Those 3 commands will update the Pi's software repository with the latest inform
 
 Next, you'll need to install support packages for the Sense HAT. In the same terminal window, execute the following command:
 
-    	sudo apt-get install sense-hat
+    sudo apt-get install sense-hat
 
 Installation
 ============
