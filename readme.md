@@ -77,7 +77,7 @@ The `MEASUREMENT_INTERVAL` variable controls how often the application reads tem
 
 To connect to Ubidots, please don't forget to put your own apikey!
 
-	api = ApiClient("A1E-baee7da49300eee20eb148229cf1ead45d71") 
+	api = ApiClient("A1E-baee7da49300eee20eb148229cf1ead4.....") 
 
 Testing the Application
 =======================
@@ -108,4 +108,4 @@ Starting The Project's Application's Automatically @ boot
 
 add this line:
 	
-	@reboot sleep 60 && python /home/pi/pisensehat/weather_station_uby.py &
+	@reboot sleep 60 && python /home/pi/pisensehat/weather_station_uby_therm.py &
