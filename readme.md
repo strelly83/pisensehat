@@ -1,9 +1,9 @@
 PiSenseHat Weather Station
 ==================
 
-This is a Raspberry Pi project that measures weather values (temperature, humidity and pressure) using the Astro Pi Sense HAT then uploads the data to a Weather Underground weather station. The Sense HAT board includes instruments that measure temperature, humidity and barometric pressure plus an 8x8 LED display, a joystick, and an accelerometer.  The HAT was created by the folks at [Astro Pi](https://astro-pi.org/); elementary school children were solicited to create experiments using the Sense HAT it that would be executed on the International Space Station. Eventually, many experiments were selected and an astronaut performed them and sent back the results for analysis. I read different articles about this board, so I decided to create a project using it. I'd wanted to install a weather station in my yard and upload the weather data to [Weather Underground](www.weatherunderground.com); the Sense HAT and a Raspberry Pi seemed like a great way to do this.
+This is a Raspberry Pi project that measures weather values (temperature, humidity and pressure) using the Astro Pi Sense HAT then uploads the data to a Weather Underground weather station. The Sense HAT board includes instruments that measure temperature, humidity and barometric pressure plus an 8x8 LED display, a joystick, and an accelerometer.  The HAT was created by the folks at [Astro Pi](https://astro-pi.org/); elementary school children were solicited to create experiments using the Sense HAT it that would be executed on the International Space Station. Eventually, many experiments were selected and an astronaut performed them and sent back the results for analysis. I read different articles about this board, so I decided to create a project using it. I'd wanted to install a weather station in my yard and upload the weather data to [Ubidots Educational]; the Sense HAT and a Raspberry Pi seemed like a great way to do this.
 
-Note: If you'd like to display one of the measurements on the display instead of the arrows this app uses, take a look at this: [http://yaab-arduino.blogspot.co.uk/2016/08/display-two-digits-numbers-on-raspberry.html](http://yaab-arduino.blogspot.co.uk/2016/08/display-two-digits-numbers-on-raspberry.html). 
+Note: If you'd like to display one of the measurements on the display instead of the arrows this app uses, take a look at this: [https://thepi.io/how-to-create-a-raspberry-pi-thermometer-using-the-sense-hat/](https://thepi.io/how-to-create-a-raspberry-pi-thermometer-using-the-sense-hat/). 
  
 Required Components
 ===================
@@ -24,7 +24,8 @@ The project folder contains several files and one folder:
 
 + `LICENSE` - The license file for this project
 + `readme.md` - This file. 
-+ `weather_station_ubi.py` - The main data collection application for this project. You'll run this application to read the Sense HAT board and post the collected data to Ubidots educational app  
++ `weather_station_ubi.py` - The main data collection application for this project. You'll run this application to read the Sense HAT board and post the collected data to Ubidots educational app. On the display you can see a red up / blue down arrow  
++ `weather_station_ubi_therm.py` - The main data collection application for this project. You'll run this application to read the Sense HAT board and post the collected data to Ubidots educational app. On the display you can see the temperature!  
 
 Hardware Assembly
 =================
