@@ -165,7 +165,6 @@ humidity = None
 pressure = None
 
 def main():
-    global last_temp
 
     # initialize the lastMinute variable to the current time to start
     last_minute = datetime.datetime.now().minute
@@ -262,48 +261,42 @@ def main():
                     print("\n%d minute mark (%d @ %s)" % (MEASUREMENT_INTERVAL, current_minute, str(now)))
                     # did the temperature go up or down?
                     
-                    while True:
-                        celcius = int(round(sense.get_temperature()))
-                        fahrenheit = int(round(1.8 * celcius + 32))
+                    celcius = temp_c
+                    fahrenheit = temp_f
 
-                        if celcius < 0:
-                            celcius = abs(celcius)
-                            celcius_color = negative_celcius_color
-                         if fahrenheit < 0:
-                            fahrenheit = abs(fahrenheit)
-                            fahrenheit_color = negative_fahrenheit_color
+                    if celcius < 0:
+                        celcius = abs(celcius)
+                        celcius_color = negative_celcius_color
+                    if fahrenheit < 0:
+                        fahrenheit = abs(fahrenheit)
+                        fahrenheit_color = negative_fahrenheit_color
 
                          # Map digits to the display array
-                         pixel_offset = 0
-                         index = 0
-                         for index_loop in range(0, 4):
-                            for counter_loop in range(0, 4):
-                                display[index] = number[int(celcius/10)*16+pixel_offset]
-                                display[index+4] = number[int(celcius%10)*16+pixel_offset]
-                                display[index+32] = number[int(fahrenheit/10)*16+pixel_offset]
-                                display[index+36] = number[int(fahrenheit%10)*16+pixel_offset]
-                                pixel_offset = pixel_offset + 1
-                                index = index + 1
-                            index = index + 4
+                    pixel_offset = 0
+                    index = 0
+                    for index_loop in range(0, 4):
+                        for counter_loop in range(0, 4):
+                            display[index] = number[int(celcius/10)*16+pixel_offset]
+                            display[index+4] = number[int(celcius%10)*16+pixel_offset]
+                            display[index+32] = number[int(fahrenheit/10)*16+pixel_offset]
+                            display[index+36] = number[int(fahrenheit%10)*16+pixel_offset]
+                            pixel_offset = pixel_offset + 1
+                            index = index + 1
+                        index = index + 4
 
-                         # Color the temperatures
-                         for index in range(0, 64):
-                             if display[index]:
-                                if index < 32:
-                                    display[index] = celcius_color
-                                else:
-                                    display[index] = fahrenheit_color
-                             else:
+                    # Color the temperatures
+                    for index in range(0, 64):
+                        if display[index]:
+                            if index < 32:
+                                display[index] = celcius_color
+                            else:
+                                display[index] = fahrenheit_color
+                            else:
                                 display[index] = empty
 
-                         # Display the temperatures
-                         sense.low_light = True # Optional
-                         sense.set_pixels(display)
-                    #    time.sleep(1)
-                    
-                    
-                    # set last_temp to the current temperature before we measure again
-                    last_temp = temp_f
+                    # Display the temperatures
+                    sense.low_light = False # Optional
+                    sense.set_pixels(display)
 
                     # Post values to Ubidots
                     temp_ds.save_value({'value':temp_c})
@@ -355,9 +348,7 @@ try:
     sense.show_message("Init", text_colour=[255, 255, 0], back_colour=[0, 0, 255])
     # clear the screen
     sense.clear()
-    # get the current temp to use when checking the previous measurement
-    last_temp = round(c_to_f(get_temp()), 1)
-    print("Current temperature reading:", last_temp)
+
 except:
     print("Unable to initialize the Sense HAT library:", sys.exc_info()[0])
     sys.exit(1)
