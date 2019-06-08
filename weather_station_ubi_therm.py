@@ -159,7 +159,7 @@ humidity = None
 pressure = None
 
 def main():
-    global last_temp
+    #global last_temp
     
     # initialize the lastMinute variable to the current time to start
     last_minute = datetime.datetime.now().minute
@@ -301,7 +301,7 @@ def main():
                     sense.set_pixels(display)
 
                     # set last_temp to the current temperature before we measure again
-                    last_temp = temp_c
+                    #last_temp = temp_c
                     
                     # Post values to Ubidots
                     print("Upload dei valori su Ubidots...")
@@ -354,8 +354,8 @@ try:
     sense.show_message("Init", text_colour=[255, 255, 0], back_colour=[0, 0, 255])
     # clear the screen
     sense.clear()
-    last_temp = round(c_to_f(get_temp()), 1)
-    print("Current temperature reading:", last_temp)
+    #last_temp = round(c_to_f(get_temp()), 1)
+    #print("Current temperature reading:", last_temp)
 except:
     print("Unable to initialize the Sense HAT library:", sys.exc_info()[0])
     sys.exit(1)
