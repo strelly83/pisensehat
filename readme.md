@@ -25,7 +25,7 @@ The project folder contains several files and one folder:
 + `LICENSE` - The license file for this project
 + `readme.md` - This file. 
 + `weather_station_ubi.py` - The main data collection application for this project. You'll run this application to read the Sense HAT board and post the collected data to Ubidots educational app. On the display you can see a red up / blue down arrow  
-+ `weather_station_ubi_therm.py` - The main data collection application for this project. You'll run this application to read the Sense HAT board and post the collected data to Ubidots educational app. On the display you can see the temperature!  
++ `weather_station_ubi_therm.py` - The main data collection application for this project. You'll run this application to read the Sense HAT board and post the collected data to Ubidots educational app. On the display you can see the temperature, humidity and pressure  
 
 Hardware Assembly
 =================
