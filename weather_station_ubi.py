@@ -170,19 +170,19 @@ def main():
 
         print("Inizializza Ubidots dS")
 
-        temp_ds = getVarbyNames("temp",dS)
+        temp_ds = getVarbyNames("Temperature",dS)
         if temp_ds is None:
             temp_ds = dS.create_variable({"name": "Temperature", "unit": "C"})    #Create a new Variable for temperature
 
         print("Inizializza Ubidots temp_c")
 
-        humidity_ds = getVarbyNames("humidity",dS)
+        humidity_ds = getVarbyNames("Humidity",dS)
         if humidity_ds is None:
             humidity_ds = dS.create_variable({"name": "Humidity","unit": "%"}) # Create a new Variable for humidity
 
         print("Inizializza Ubidots humidity")
 
-        pressure_ds = getVarbyNames("pressure",dS)
+        pressure_ds = getVarbyNames("Pressure",dS)
         if pressure_ds is None:
             pressure_ds = dS.create_variable({"name": "Pressure","unit": "hPa"}) # Create a new Variable for temperature
 
@@ -250,9 +250,13 @@ def main():
                     last_temp = temp_f
 
                     # Post values to Ubidots
-                    temp_ds.save_value({'value':temp_c})
-                    humidity_ds.save_value({'value':humidity})
-                    pressure_ds.save_value({'value':pressure})
+                    print("Upload dei valori su Ubidots...")
+					try:
+                        temp_ds.save_value({'value':temp_c})
+                        humidity_ds.save_value({'value':humidity})
+                        pressure_ds.save_value({'value':pressure})
+                    except:
+					    print("Upload dei valori su Ubidots... Failed; retry later")
 
         # wait a second then check again
         # You can always increase the sleep value below to check less often
