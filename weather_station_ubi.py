@@ -251,12 +251,12 @@ def main():
 
                     # Post values to Ubidots
                     print("Upload dei valori su Ubidots...")
-					try:
+                    try:
                         temp_ds.save_value({'value':temp_c})
                         humidity_ds.save_value({'value':humidity})
                         pressure_ds.save_value({'value':pressure})
                     except:
-					    print("Upload dei valori su Ubidots... Failed; retry later")
+                        print("Upload dei valori su Ubidots... Failed; retry later")
 
         # wait a second then check again
         # You can always increase the sleep value below to check less often
