@@ -313,7 +313,7 @@ def main():
                         humidity_ds.save_value({'value':humidity})
                         pressure_ds.save_value({'value':pressure})
                     except:
-				        print("Upload dei valori su Ubidots... Failed; retry later")    
+                        print("Upload dei valori su Ubidots... Failed; retry later")    
                     
                     sense.clear()
                     # Display temperature and humidity
